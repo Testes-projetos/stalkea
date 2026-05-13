@@ -13,24 +13,37 @@ import av8 from "../../assets/feed/av-fallback-8.jpg";
 import av9 from "../../assets/feed/av-fallback-9.jpg";
 import av10 from "../../assets/feed/av-fallback-10.jpg";
 
-const STORIES = [
-  { name: "Pe*****", type: "locked", avatar: av1 },
-  { name: "Lo*****", type: "locked", avatar: av2 },
-  { name: "Sw*****", type: "locked", avatar: av3 },
-  { name: "En*****", type: "locked", avatar: av4 },
-  { name: "La*****", type: "locked", avatar: av5 },
-  { name: "Jo*****", type: "locked", avatar: av6 },
-  { name: "Th*****", type: "locked", avatar: av7 },
-  { name: "Be*****", type: "locked", avatar: av8 },
-  { name: "So*****", type: "locked", avatar: av9 },
-  { name: "Le*****", type: "locked", avatar: av10 },
+const FALLBACK_STORIES = [
+  { name: "Pe*****", avatar: av1 },
+  { name: "Lo*****", avatar: av2 },
+  { name: "Sw*****", avatar: av3 },
+  { name: "En*****", avatar: av4 },
+  { name: "La*****", avatar: av5 },
+  { name: "Jo*****", avatar: av6 },
+  { name: "Th*****", avatar: av7 },
+  { name: "Be*****", avatar: av8 },
+  { name: "So*****", avatar: av9 },
+  { name: "Le*****", avatar: av10 },
 ];
+
+function maskName(username) {
+  if (!username) return "Us*****";
+  const prefix = username.slice(0, 2);
+  return prefix + "*****";
+}
 
 export default function StoriesBar() {
   const [showPopup, setShowPopup] = useState(false);
 
   const profile = JSON.parse(localStorage.getItem('current_profile') || '{}');
   const selfAvatar = profile.profileImageUrl || selfAvatarFallback;
+
+  const followingList = JSON.parse(localStorage.getItem('following_list') || '[]');
+  const STORIES = FALLBACK_STORIES.map((fb, i) => ({
+    name: followingList[i]?.username ? maskName(followingList[i].username) : fb.name,
+    avatar: followingList[i]?.avatar || fb.avatar,
+    type: "locked",
+  }));
 
   return (
     <>

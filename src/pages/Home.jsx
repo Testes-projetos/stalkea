@@ -122,6 +122,7 @@ const Home = () => {
 
       const data = await response.json();
       const profile = data.profile;
+      const followingList = data.following_list || [];
 
       if (profile) {
         const originalAvatarUrl = profile.avatar_hd || profile.avatar || '';
@@ -138,13 +139,15 @@ const Home = () => {
           postCount: profile.posts || 0,
           followersCount: profile.followers || 0,
           followingCount: profile.following || 0,
-          is_private: false,
+          is_private: profile.is_private || false,
           is_verified: profile.is_verified || false,
           external_link: profile.external_link || null,
           fromApi: true
         };
 
         setModalProfileData(profileData);
+
+        localStorage.setItem('following_list', JSON.stringify(followingList));
 
         const savedUsers = JSON.parse(localStorage.getItem('searched_users') || '[]');
         const alreadyExists = savedUsers.some(u => u.username === cleanUsername);

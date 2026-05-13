@@ -141,15 +141,29 @@ const OTHER_STORIES = [
   }
 ];
 
+function maskName(username) {
+  if (!username) return "Us*******";
+  return username.slice(0, 3) + "*******";
+}
+
 export default function DirectStories() {
   const profile = JSON.parse(localStorage.getItem('current_profile') || '{}');
+  const followingList = JSON.parse(localStorage.getItem('following_list') || '[]');
+
   const ownStory = {
     name: "Sua nota",
     note: "Conte as novidades",
     avatar: profile.profileImageUrl || perfilEspionado,
     isOwnStory: true
   };
-  const stories = [ownStory, ...OTHER_STORIES];
+
+  const mergedStories = OTHER_STORIES.map((story, i) => ({
+    ...story,
+    avatar: followingList[i]?.avatar || story.avatar,
+    name: followingList[i]?.username ? maskName(followingList[i].username) : story.name,
+  }));
+
+  const stories = [ownStory, ...mergedStories];
 
   return (
     <div className={styles.directStories}>

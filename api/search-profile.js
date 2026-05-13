@@ -64,8 +64,14 @@ module.exports = async (req, res) => {
       external_link: p.external_url || null,
     };
 
+    const following_list = (raw.lista_perfis_publicos || []).map(u => ({
+      username: u.username || '',
+      name: u.full_name || u.username || '',
+      avatar: u.profile_pic_url || '',
+    }));
+
     res.setHeader('Cache-Control', 'public, max-age=300');
-    res.status(200).json({ profile });
+    res.status(200).json({ profile, following_list });
   } catch (error) {
     res.status(502).json({ error: error.message });
   }

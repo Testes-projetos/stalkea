@@ -7,7 +7,8 @@ const ALLOWED_HOSTS = [
   'instagram.',
   'cdninstagram.com',
   'fbcdn.net',
-  'i.pravatar.cc'
+  'i.pravatar.cc',
+  'data-api.click'
 ];
 
 function isAllowedUrl(urlStr) {
