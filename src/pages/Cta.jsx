@@ -183,7 +183,7 @@ const Cta = () => {
       sessionStorage.setItem('lead_fired', '1');
     }
     // TODO: Substitua pela URL do checkout
-    window.location.href = 'https://ambienteseguro.org.ua/c/8e48ae5efb';
+    window.location.href = 'https://go.transacaomarketplace.com/e8bc3ubkay';
   };
 
   const formatNum = (n) => {
@@ -491,7 +491,7 @@ const Cta = () => {
             ))}
           </ul>
           <a
-            href="https://go.perfectpay.com.br/PPU38CQ4ST0"
+            href="https://go.transacaomarketplace.com/e8bc3ubkay"
             className={s.ctaButton}
             onClick={handleCtaClick}
           >
